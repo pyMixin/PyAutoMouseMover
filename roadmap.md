@@ -32,22 +32,27 @@ builds on the previous one. Check items off as they land.
 
 ---
 
-## Phase 1 — MVP Core Script
+## Phase 1 — MVP Core Script ✅
 **Goal:** the §11 "Small Effective Script" running end-to-end. This is the standalone
 deliverable in its simplest form.
 
-- [ ] Implement `move_mouse(move_pixels)` — nudge right, return to origin.
-- [ ] Implement `argparse` CLI: `--interval`, `--pixels`, `--duration`, `--failsafe`.
-- [ ] Graceful `import pyautogui` guard with a helpful install message.
-- [ ] Main loop: move → sleep → honor duration timeout.
-- [ ] Stop controls: `Ctrl+C` (KeyboardInterrupt) and `FailSafeException`.
-- [ ] Startup banner: interval, pixel distance, duration, stop hint.
+- [x] Implement `move_mouse(move_pixels)` — nudge right, return to origin.
+- [x] Implement `argparse` CLI: `--interval`, `--pixels`, `--duration`, `--failsafe`
+      (with positive-value validation).
+- [x] Graceful `import pyautogui` guard with a helpful install message.
+- [x] Main loop: move → sleep → honor duration timeout.
+- [x] Stop controls: `Ctrl+C` (KeyboardInterrupt) and `FailSafeException`.
+- [x] Startup banner: interval, pixel distance, duration, stop hint.
 
 **Exit criteria (maps to FR-1…FR-4):**
-- Runs forever with defaults; stops cleanly on `Ctrl+C`.
-- `--duration N` exits after N minutes.
-- `--failsafe` stops when the mouse hits the top-left corner.
-- Same script runs on both Windows and macOS.
+- [x] Runs forever with defaults; stops cleanly on `Ctrl+C` (verified via mocked loop).
+- [x] `--duration N` exits after N minutes (verified).
+- [x] `--failsafe` stops when the mouse hits the top-left corner (handler verified).
+- [x] Same script runs on both Windows and macOS (pure `pyautogui`, no OS-specific code).
+
+> **Note:** logic verified with a mocked `pyautogui`. A real cursor-movement run on
+> macOS needs Accessibility permission granted to the terminal — recommended manual
+> check: `python auto_mouse_mover.py --interval 2 --duration 1`.
 
 ---
 

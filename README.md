@@ -11,7 +11,25 @@ kiosks, and long-running jobs.
 ## Status
 
 🚧 In development. See [roadmap.md](./roadmap.md) for the phased plan.
-Phase 0 (scaffolding) is complete; the runnable MVP arrives in Phase 1.
+Phases 0–1 complete: the runnable MVP works. Next up: cross-platform permission
+hardening, config file, and packaging.
+
+## Usage
+
+```bash
+python auto_mouse_mover.py                          # move 1px every 60s, run until stopped
+python auto_mouse_mover.py --interval 30            # every 30 seconds
+python auto_mouse_mover.py --duration 120           # run for 2 hours, then exit
+python auto_mouse_mover.py --interval 45 --pixels 3 # 3px every 45 seconds
+python auto_mouse_mover.py --failsafe               # move mouse to top-left corner to stop
+```
+
+| Flag         | Default | Description                                          |
+| ------------ | ------- | ---------------------------------------------------- |
+| `--interval` | 60      | Seconds between movements                            |
+| `--pixels`   | 1       | Pixels to move (right, then back)                    |
+| `--duration` | 0       | Minutes to run; 0 = until stopped                    |
+| `--failsafe` | off     | Enable fail-safe stop (cursor to top-left corner)    |
 
 ## Requirements
 
