@@ -1,0 +1,23 @@
+# Virtual environment
+.venv/
+venv/
+
+# PyInstaller build artifacts
+dist/
+build/
+*.spec
+
+# Python caches
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+
+# Logs
+*.log
