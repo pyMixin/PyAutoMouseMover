@@ -10,27 +10,25 @@ builds on the previous one. Check items off as they land.
 
 ---
 
-## Environment Note (resolve before Phase 1)
+## Environment Note (resolved ✅)
 
-- Current `.venv` runs **Python 3.9.6**; the design doc requires **3.10+**.
-- `pyautogui` is **not yet installed**.
-
-**Action:** either recreate the venv on Python 3.10+, or relax the floor to 3.9 if the
-code avoids 3.10-only syntax. Decide this first — it affects every later phase.
+- ~~Current `.venv` runs **Python 3.9.6**; the design doc requires **3.10+**.~~
+  Venv recreated on **Python 3.13.9**.
+- ~~`pyautogui` is **not yet installed**.~~ Installed (`pyautogui` 0.9.54).
 
 ---
 
-## Phase 0 — Project Scaffolding
+## Phase 0 — Project Scaffolding ✅
 **Goal:** a clean repo skeleton matching §21 of the design doc.
 
-- [ ] `git init` (repo is not currently version-controlled).
-- [ ] Create folder structure: `auto_mouse_mover.py`, `requirements.txt`, `README.md`.
-- [ ] `requirements.txt` → `pyautogui`.
-- [ ] Add `.gitignore` (`.venv/`, `dist/`, `build/`, `__pycache__/`, `*.spec`).
-- [ ] Recreate / verify the virtual environment (see Environment Note) and
+- [x] `git init` (repo is now version-controlled; baseline committed).
+- [x] Create folder structure: `auto_mouse_mover.py`, `requirements.txt`, `README.md`.
+- [x] `requirements.txt` → `pyautogui`.
+- [x] Add `.gitignore` (`.venv/`, `.idea/`, `dist/`, `build/`, `__pycache__/`, `*.spec`).
+- [x] Recreate the virtual environment on Python 3.13 and
       `pip install -r requirements.txt`.
 
-**Exit criteria:** `python -c "import pyautogui"` succeeds inside the venv.
+**Exit criteria:** ✅ `python -c "import pyautogui"` succeeds inside the venv.
 
 ---
 
