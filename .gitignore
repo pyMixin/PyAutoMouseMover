@@ -21,3 +21,6 @@ __pycache__/
 
 # Logs
 *.log
+
+# User-specific runtime config (commit config.example.json instead)
+config.json

@@ -1,0 +1,6 @@
+{
+  "interval_seconds": 60,
+  "move_pixels": 1,
+  "duration_minutes": 0,
+  "failsafe": true
+}

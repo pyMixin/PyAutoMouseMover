@@ -1,5 +1,14 @@
 # Python Auto Mouse Mover — Solution Design Document
 
+> **Implementation status (✅ built).** This design is fully implemented in
+> `auto_mouse_mover.py`. Phases 0–5 of [roadmap.md](./roadmap.md) are complete:
+> cross-platform MVP, macOS Accessibility detection, screen-edge-safe movement,
+> `config.json` support (CLI > config > defaults), `logging` with an optional
+> `--log-file`, and a PyInstaller single-file build. The shipped script extends the
+> reference in §11 below; that reference is kept for design context — see the actual
+> source file and [README.md](./README.md) for current behavior. Phase 6 (tray icon,
+> hotkeys, code signing) is an optional future backlog and intentionally not built.
+
 ## 1. Purpose
 
 The goal is to create a small, lightweight Python-based auto mouse mover that runs on Windows and macOS. The script should periodically move the mouse slightly to simulate user activity for legitimate use cases such as keeping a workstation awake during demos, dashboards, long-running jobs, kiosk displays, or lab environments.
@@ -80,30 +89,41 @@ pip install pyinstaller
 ## 6. High-Level Architecture
 
 ```text
-+-----------------------------+
-| auto_mouse_mover.py         |
-+-----------------------------+
-| Config Loader               |
-| - interval_seconds          |
-| - move_pixels               |
-| - duration_minutes          |
-| - safe_corner_stop          |
-+-----------------------------+
-| Platform Permission Check   |
-| - Windows admin optional    |
-| - macOS Accessibility check |
-+-----------------------------+
-| Mouse Movement Engine       |
-| - Move right                |
-| - Move back                 |
-| - Sleep interval            |
-+-----------------------------+
-| Stop Controls               |
-| - Ctrl+C                    |
-| - Move mouse to corner      |
-| - Optional duration timeout |
-+-----------------------------+
++-------------------------------------+
+| auto_mouse_mover.py                 |
++-------------------------------------+
+| Config Resolution                   |
+| - CLI flags > config.json > DEFAULTS|
+| - interval_seconds                  |
+| - move_pixels                       |
+| - duration_minutes                  |
+| - failsafe                          |
++-------------------------------------+
+| Logging (logging module)            |
+| - console always                    |
+| - optional --log-file (OS path)     |
++-------------------------------------+
+| Platform Permission Check           |
+| - Windows admin optional            |
+| - macOS Accessibility check (probe) |
++-------------------------------------+
+| Mouse Movement Engine               |
+| - Move right (left near edge)       |
+| - Move back                         |
+| - Sleep interval                    |
++-------------------------------------+
+| Stop Controls                       |
+| - Ctrl+C                            |
+| - Move mouse to corner (fail-safe)  |
+| - Optional duration timeout         |
++-------------------------------------+
 ```
+
+> **As built:** settings resolve in the order CLI flags → `config.json` →
+> built-in defaults. Output goes through Python's `logging` module (console by
+> default, optional file). The macOS permission check probes a real 1px move and
+> restores the cursor. The movement engine nudges left when near the right screen
+> edge so the move is never clamped to a no-op. See `auto_mouse_mover.py`.
 
 ---
 
@@ -573,12 +593,16 @@ Policy-based runtime limit
 ## 21. Recommended Final Folder Structure
 
 ```text
-auto-mouse-mover/
+auto-mouse-mover/            # as built
 │
-├── auto_mouse_mover.py
-├── requirements.txt
+├── auto_mouse_mover.py      # application
+├── config.example.json      # copy to config.json to customize
+├── requirements.txt         # runtime: pyautogui
+├── requirements-dev.txt     # + pyinstaller for packaging
 ├── README.md
-└── dist/
+├── roadmap.md               # phased plan (Phases 0–5 complete)
+├── claude.md                # this design document
+└── dist/                    # built binary (gitignored)
 ```
 
 ---
